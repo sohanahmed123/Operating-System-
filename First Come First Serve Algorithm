@@ -1,0 +1,36 @@
+// Source Code
+
+
+#include <stdio.h>
+int main() 
+{
+  int p[15], bt[15], n, wt[15] = {0};
+  float total_wt = 0, total_tat = 0;
+  printf("Enter the number of processes: ");
+  scanf("%d", &n);
+  printf("Enter process IDs: ");
+  for (int i = 0; i < n; i++) 
+  {
+      scanf("%d", &p[i]);
+  }
+  printf("Enter burst times: ");
+  for (int i = 0; i < n; i++) 
+  {
+    scanf("%d", &bt[i]);
+  }
+  for (int i = 1; i < n; i++)   
+  {
+    wt[i] = bt[i - 1] + wt[i - 1];
+  }
+  printf("PID\tBT\tWT\tTAT\n");
+  for (int i = 0; i < n; i++)
+  {
+    int tat = bt[i] + wt[i];
+    printf("%d\t%d\t%d\t%d\n", p[i], bt[i], wt[i], tat);
+    total_wt += wt[i];
+    total_tat += tat;
+  }
+  printf("Avg WT = %.2f\n", total_wt / n);
+  printf("Avg TAT = %.2f\n", total_tat / n);
+  return 0;
+}
