@@ -1,0 +1,61 @@
+//Round Robin Source Code
+
+#include <stdio.h>
+int main() 
+{
+  int n, quantum, i, t = 0, flag = 0;
+  int p[15], bt[15], rem_bt[15], wt[15] = {0}, tat[15] = {0};
+  float total_wt = 0, total_tat = 0;
+  printf("Enter the number of processes: ");
+  scanf("%d", &n);
+  printf("Enter process IDs: ");
+  for (i = 0; i < n; i++)
+  {
+    scanf("%d", &p[i]);
+  }
+  printf("Enter burst times: ");
+  for (i = 0; i < n; i++) 
+  {
+    scanf("%d", &bt[i]);
+    rem_bt[i] = bt[i];
+  }
+  printf("Enter time quantum: ");
+  scanf("%d", &quantum);
+  while (1) 
+  {
+  flag = 1;
+  for (i = 0; i < n; i++)
+  {
+    if (rem_bt[i] > 0)
+      {
+          flag = 0; 
+          if (rem_bt[i] > quantum)
+              {
+                  t += quantum;
+                  rem_bt[i] -= quantum;
+              } 
+              else
+              {
+                t += rem_bt[i];
+                wt[i] = t - bt[i];
+                rem_bt[i] = 0;
+              }
+      }
+}
+if (flag) break;
+  }
+      for (i = 0; i < n; i++)
+      {
+          tat[i] = bt[i] + wt[i];
+          total_wt += wt[i];
+          total_tat += tat[i];
+      }
+      printf("PID\tBT\tWT\tTAT\n");
+      for (i = 0; i < n; i++)
+      {
+          printf("%d\t%d\t%d\t%d\n", p[i], bt[i], wt[i], tat[i]);
+      }
+      printf("Avg WT = %.2f\n", total_wt / n);
+      printf("Avg TAT = %.2f\n", total_tat / n);
+      return 0;
+}
